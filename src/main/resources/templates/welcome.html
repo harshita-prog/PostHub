@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>PostHub - Explore and Share Articles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .intro-container {
+            text-align: center;
+            padding: 50px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 100px auto;
+            max-width: 600px;
+            border-radius: 10px;
+        }
+
+        .highlight {
+            color: #ff6f00;
+        }
+
+        .intro {
+            font-size: 18px;
+            line-height: 1.5;
+            margin-top: 30px;
+        }
+
+        .phrase {
+            font-size: 16px;
+            color: #666666;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .login-button,
+        .signup-button {
+            display: inline-block;
+            width: 150px;
+            padding: 12px 20px;
+            background-color: #ff6f00;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-button:hover,
+        .signup-button:hover {
+            background-color: #ff8f00;
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .instagram-link {
+            color: #ff6f00;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .instagram-link:hover {
+            color: #ff8f00;
+        }
+
+        .emoji {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="intro-container">
+    <h1>Welcome to <span class="highlight">PostHub</span>! <span class="emoji">🌟</span></h1>
+    <p class="intro">Welcome to PostHub, a website where anyone can come and post their thoughts in the form of articles and blogs. Whether you're an expert in your field or just someone with something to say, we want to hear from you. Our goal is to create a platform where people can share their ideas and connect with others who share their interests. Let's get started! <span class="emoji">💡</span></p>
+    <p class="phrase">Join our community today and start sharing your stories with the world! <span class="emoji">🌎</span></p>
+    <a href="/login" class="login-button">Login </a>
+    <a href="/api/signup" class="signup-button">Sign Up </a>
+    <div class="social-links">
+        <a href="https://www.instagram.com/harshitaaguptaaa" class="instagram-link">Follow us on Instagram <span class="emoji">📸</span></a>
+        <h4><a th:href="@{/about}">About Us</a></h4>
+    </div>
+</div>
+</body>
+</html>

@@ -2,29 +2,58 @@ package com.post.posthub.controller;
 
 import com.post.posthub.Entity.User;
 import com.post.posthub.Service.UserService;
+import com.post.posthub.exception.InvalidCredentialsException;
 import com.post.posthub.exception.UserAlreadyExistsException;
+import com.post.posthub.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class AuthController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/signup")
+    public String signUpForm(Model model) {
+        model.addAttribute("user", new User());
+        return "signup";
+    }
+
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody User signUpRequest) {
+    public String signUp(@ModelAttribute User signUpRequest, Model model) {
         try {
             User user = userService.signUp(signUpRequest.getUsername(), signUpRequest.getEmail(), signUpRequest.getPassword());
-
-            return ResponseEntity.status(200).body(user);
+            model.addAttribute("user", user);
+            return "redirect:/posts/all";
         } catch (UserAlreadyExistsException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
+            return "signup";
         }
+    }
+
+    @GetMapping("/login")
+    public String loginForm(Model model) {
+        model.addAttribute("user", new User());
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute User loginRequest, Model model) {
+        try {
+            User user = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
+            model.addAttribute("user", user);
+            return "redirect:/posts/all";
+        } catch (InvalidCredentialsException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "login";
+        } catch (UserNotFoundException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "login";        }
     }
 }
